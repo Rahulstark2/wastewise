@@ -2,13 +2,14 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useToast } from '@chakra-ui/react';
 
 const Login = () => {
   const navigate = useNavigate();
+  const toast = useToast();
 
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      console.log('Credential Response:', credentialResponse);
       const { access_token } = credentialResponse;
 
       try {
@@ -18,17 +19,56 @@ const Login = () => {
           },
         });
         const userInfo = await response.json();
-        console.log('User Info:', userInfo);
+        const { email } = userInfo;
 
-        const { email }= userInfo;
-        console.log('Email:', email);
+        const loginResponse = await fetch('http://localhost:3000/api/v1/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        const loginData = await loginResponse.json();
+
+        if (loginResponse.ok) {
+          // Store the token in local storage
+          localStorage.setItem("token", loginData.token);
+          localStorage.setItem("userPhoneNumber", loginData.user.phoneNumber);
+          localStorage.setItem("userEmail", loginData.user.email);
+          let addressWords = loginData.user.address.split(' '); // Split the address into words
+          let shortAddress = addressWords.slice(0, 3).join(' '); // Join the first three words back into a string
+          localStorage.setItem("userAddress", shortAddress); // Store the shortened address
+          
+
+          
+
+          toast({
+            title: 'Login Successful',
+            description: 'You have been logged in successfully.',
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+          });
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+        } else {
+          toast({
+            title: 'Login Failed',
+            description: loginData.message,
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          });
+        }
       } catch (error) {
         console.error('Error fetching user info:', error);
       }
     },
     onError: () => {
       console.log('Login Failed');
-    }
+    },
   });
 
   const handleSignup = () => {

@@ -10,15 +10,15 @@ const ContactInfo = () => {
       <div className="space-y-4">
         <p className="flex items-center justify-center">
           <i className="fas fa-phone-alt mr-4"></i>
-          (+40) 772 100 200
+          (+91) 9163185399
         </p>
         <p className="flex items-center justify-center">
           <i className="fas fa-envelope mr-4"></i>
-          uxultimates@gmail.com
+          wastewise2@gmail.com
         </p>
         <p className="flex items-center justify-center">
           <i className="fas fa-map-marker-alt mr-4"></i>
-          Dyonisie Wolf Bucharest, RO 010458
+          India
         </p>
       </div>
       <div className="flex space-x-8 mt-8">
