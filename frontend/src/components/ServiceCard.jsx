@@ -10,9 +10,6 @@ const ServiceCard = ({src,title}) => {
               <div className="text-[18px]">
                   {title}
               </div>
-              <div className="  cursor-pointer " >
-                  Know More →
-              </div>
           </div>
       </div>
     )

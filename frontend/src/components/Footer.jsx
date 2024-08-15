@@ -32,10 +32,7 @@ const Footer = () => {
             <p>BIS, WPC, ISO</p>
           </div>
         </div>
-        <div className="space-y-2 mt-[270px] lg:mt-0">
-          <h3 className="text-lg font-bold">Contact Us</h3>
-          
-        </div>
+        
       </div>
     </footer>
   );

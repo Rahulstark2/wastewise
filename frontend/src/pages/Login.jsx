@@ -11,7 +11,6 @@ const Login = () => {
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       const { access_token } = credentialResponse;
-
       try {
         const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
           headers: {
@@ -20,29 +19,22 @@ const Login = () => {
         });
         const userInfo = await response.json();
         const { email } = userInfo;
-
-        const loginResponse = await fetch('http://localhost:3000/api/v1/user/login', {
+        const loginResponse = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email }),
         });
-
         const loginData = await loginResponse.json();
-
         if (loginResponse.ok) {
-          // Store the token in local storage
           localStorage.setItem("token", loginData.token);
           localStorage.setItem("userPhoneNumber", loginData.user.phoneNumber);
           localStorage.setItem("userEmail", loginData.user.email);
-          let addressWords = loginData.user.address.split(' '); // Split the address into words
-          let shortAddress = addressWords.slice(0, 3).join(' '); // Join the first three words back into a string
-          localStorage.setItem("userAddress", shortAddress); // Store the shortened address
+          let addressWords = loginData.user.address.split(' ');
+          let shortAddress = addressWords.slice(0, 3).join(' ');
+          localStorage.setItem("userAddress", shortAddress);
           
-
-          
-
           toast({
             title: 'Login Successful',
             description: 'You have been logged in successfully.',
@@ -76,24 +68,27 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="bg-[#DFEDCC] p-8 rounded-lg shadow-md w-96">
-        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
-        <button
-          onClick={() => login()}
-          className="w-full bg-white text-gray-700 font-semibold py-2 px-4 rounded-md border border-gray-300 shadow-sm hover:shadow-md transition duration-300 flex items-center justify-center space-x-2 mb-4"
-        >
-          <FcGoogle className="text-2xl" />
-          <span>Login with Google</span>
-        </button>
-        <div className="text-center">
-          <span className="text-gray-600">Don't have an account yet?</span>
-          <button
-            onClick={handleSignup}
-            className="ml-2 text-blue-600 hover:underline focus:outline-none"
+    <div className="flex flex-col md:flex-row h-screen">
+      <div 
+        className="hidden md:block md:w-2/4 bg-cover bg-center bg-no-repeat" 
+        style={{ backgroundImage: 'url("src/assets/image-4.webp")' }}
+      />
+      <div className="w-full md:w-3/4 bg-[#DFEDCC] flex items-center justify-center p-8 min-h-screen">
+        <div className="w-full max-w-md">
+          <h1 className="text-3xl md:text-5xl font-bold text-black mb-2">Welcome Back! 👋</h1>
+          <p className="text-black mb-8 mt-4 md:mt-8">Continue with Google to Proceed</p>
+          
+          <button 
+            onClick={() => login()} 
+            className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md mb-4 flex items-center justify-center space-x-2"
           >
-            Sign up
+            <FcGoogle className="text-2xl" />
+            <span>Continue with Google</span>
           </button>
+          
+          <p className="text-black mt-4 md:mt-8 text-center">
+            Already have an account? <span className="text-black hover:underline cursor-pointer hover:text-gray-700" onClick={handleSignup}>Sign up here!</span>
+          </p>
         </div>
       </div>
     </div>

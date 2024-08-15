@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/DashboardHeader';
 import MainContent from '../components/MainContent';
 import { AddressProvider } from '../context/AddressContext';
 import { ScheduleProvider } from '../context/ScheduleContext';
+import Scheduling from '../components/Scheduling';
 
 function Dashboard() {
   const toast = useToast();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token'); // get the token from local storage
+  const location = useLocation();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!token) {
@@ -21,7 +23,7 @@ function Dashboard() {
         duration: 2000,
         isClosable: true,
       });
-      navigate('/'); // redirect to the home page
+      navigate('/');
     }
   }, [token, navigate, toast]);
 
@@ -30,19 +32,20 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex">
       {/* Sidebar */}
-      <Sidebar className="lg:w-64 w-full lg:h-screen lg:fixed lg:top-0 lg:left-0 bg-gray-800 text-white" />
-
-      <div className="flex-grow flex flex-col">
+      <Sidebar />
+      
+      {/* Main Content */}
+      <div className="flex-grow flex flex-col min-h-screen w-full lg:ml-64 transition-all duration-300">
         <AddressProvider>
           {/* Header */}
-          <Header className="lg:pl-64" />
-
+          <Header />
+          
           {/* Main Content */}
           <main className="flex-grow p-4">
             <ScheduleProvider>
-            <MainContent />
+              {location.pathname === '/scheduling' ? <Scheduling /> : <MainContent />}
             </ScheduleProvider>
           </main>
         </AddressProvider>

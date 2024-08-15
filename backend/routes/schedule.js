@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authMiddleware } = require("../middleware");
 const zod = require('zod');
-const { Schedule } = require('../db'); // Assuming this is your Mongoose model
+const { Schedule, User } = require('../db');
 const moment = require('moment');
 
 const scheduleBody = zod.object({
@@ -24,10 +24,8 @@ router.post('/submit', authMiddleware, async (req, res) => {
     }
 
     try {
-        // Fetch all previous schedules for the email
         const previousSchedules = await Schedule.find({ email: req.body.email });
 
-        // Check if the selected date is greater than all previous dates
         const isValidDate = previousSchedules.every(schedule => {
             return moment(req.body.selectedDate).isAfter(moment(schedule.selectedDate));
         });
@@ -36,22 +34,20 @@ router.post('/submit', authMiddleware, async (req, res) => {
             return res.status(400).send('Selected date must be greater than all previous dates');
         }
 
-        // Prepare the data for creation, assuming selectedTruck needs to be serialized
         const truckData = {
           id: req.body.selectedTruck.id,
           license: req.body.selectedTruck.license,
           driver: req.body.selectedTruck.driver
         };
 
-        // Create the schedule
         const schedule = await Schedule.create({
             email: req.body.email,
             selectedDate: req.body.selectedDate,
-            selectedTruck: truckData // Adjusted to match expected data structure
+            selectedTruck: truckData
         });
         res.status(201).json(schedule);
     } catch (error) {
-        console.error(error); // Log the error for debugging purposes
+        console.error(error);
         let errorMessage;
         if (error instanceof mongoose.Error && error.name === 'ValidationError') {
             errorMessage = 'Validation failed';
@@ -59,6 +55,45 @@ router.post('/submit', authMiddleware, async (req, res) => {
             errorMessage = 'Error saving data';
         }
         res.status(500).send(errorMessage);
+    }
+});
+
+router.post('/info', authMiddleware, async (req, res) => {
+    try {
+        const email = req.body.email;
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+
+        const schedules = await Schedule.find({ email: email });
+
+        // Convert dates to local time
+        const localSchedules = schedules.map(schedule => {
+          const localDate = new Date(schedule.selectedDate.getTime() + (new Date().getTimezoneOffset() * 60000));
+          return { ...schedule.toObject(), selectedDate: localDate };
+        });
+
+        res.json({ firstName: user.firstName, schedules: localSchedules });
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
+});
+
+router.post('/remove', authMiddleware, async (req, res) => {
+    try {
+        const scheduleId = req.body.scheduleId;
+        const deletedSchedule = await Schedule.findByIdAndDelete(scheduleId);
+
+        if (!deletedSchedule) {
+            return res.status(404).send({ message: 'Schedule not found' });
+        }
+
+        res.send({ message: 'Schedule deleted successfully' });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting schedule', error });
     }
 });
 

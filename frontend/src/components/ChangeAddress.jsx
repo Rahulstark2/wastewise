@@ -7,7 +7,7 @@ const ChangeAddress = ({ onAddressChange, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/v1/user/changeaddress', {
+      const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/changeaddress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

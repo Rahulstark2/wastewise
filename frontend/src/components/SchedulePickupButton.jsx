@@ -20,7 +20,7 @@ const SchedulePickupButton = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/schedule/submit', {
+      const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/schedule/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,10 +66,14 @@ const SchedulePickupButton = () => {
 
   return (
     <div className="flex justify-end mt-4">
-      <Button type="button" onClick={handleSubmit} colorScheme="purple">
-        Schedule a Pickup
-      </Button>
-    </div>
+    <button
+      type="button"
+      onClick={handleSubmit}
+      className="bg-custom-purple text-white px-4 py-2 rounded"
+    >
+      Schedule a Pickup
+    </button>
+  </div>
   );
 };
 

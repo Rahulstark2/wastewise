@@ -34,7 +34,7 @@ const ServiceCards = () => {
             <img src={service.image} alt={service.title} className="w-full h-48 object-cover" />
             <div className="p-4">
               <h3 className="font-semibold text-lg mb-2">{service.title}</h3>
-              <button className="text-custom-blackish hover:underline">Know More »</button>
+  
             </div>
           </div>
         ))}

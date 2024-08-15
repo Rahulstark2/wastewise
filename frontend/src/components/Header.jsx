@@ -23,9 +23,7 @@ const Header = () => {
           <button onClick={() => navigate("/home")} className="text-custom-black">Home</button>
           <button onClick={() => navigate("/services")} className="text-custom-black">Our Services</button>
           <button onClick={() => navigate("/blog")} className="text-custom-black">Blog</button>
-          <button className="text-custom-black">About Us</button>
           <button onClick={() => navigate("/contact")} className="text-custom-black">Contact Us</button>
-          <button className="text-custom-black"><i className="fas fa-search"></i></button>
         </nav>
       </header>
     </div>

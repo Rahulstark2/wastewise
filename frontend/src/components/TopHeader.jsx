@@ -9,32 +9,27 @@ import LogoutButton from './LogoutButton';
 import Dashboard from './DashboardButton.jsx'; // Adjust the path according to your project structure
 
 const TopHeader = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Instant initial check
+  const [phoneNumber, setPhoneNumber] = useState(localStorage.getItem('userPhoneNumber') || '');
+  const [email, setEmail] = useState(localStorage.getItem('userEmail') || '');
+  const [address, setAddress] = useState(localStorage.getItem('userAddress') || '');
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await fetch('http://localhost:3000/api/v1/user/me', {
+          const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/me', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          if (response.ok) {
-            setIsLoggedIn(true);
-            const storedPhoneNumber = localStorage.getItem('userPhoneNumber');
-            const storedEmail = localStorage.getItem('userEmail');
-            const storedAddress = localStorage.getItem('userAddress');
-            setPhoneNumber(storedPhoneNumber || '');
-            setEmail(storedEmail || '');
-            setAddress(storedAddress || '');
-          } else {
+          if (!response.ok) {
             setIsLoggedIn(false);
+            localStorage.removeItem('token'); // Clear token if it's invalid
           }
+        } else {
+          setIsLoggedIn(false);
         }
       } catch (error) {
         console.error('Error checking login status:', error);

@@ -13,7 +13,7 @@ const ContactForm = () => {
 
     try {
       // Call the server-side API to send the email
-      await axios.post('http://localhost:3000/api/v1/contact/mail', { name, topic, message });
+      await axios.post('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/contact/mail', { name, topic, message });
 
       // Display a success toast notification
       toast({

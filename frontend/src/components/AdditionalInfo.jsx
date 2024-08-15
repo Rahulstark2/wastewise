@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
-const AdditionalInfo = ({ email }) => {
+const AdditionalInfo = ({ email,firstName,lastName }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -29,8 +29,17 @@ const AdditionalInfo = ({ email }) => {
     e.preventDefault();
     if (!phoneError && address) {
       setIsLoading(true);
+
       try {
-        const response = await fetch('http://localhost:3000/api/v1/user/additional-details', {
+        const a = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, firstName,lastName }),
+        });
+
+        const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/additional-details', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,18 +140,18 @@ const AdditionalInfo = ({ email }) => {
 
   return (
     <Box minHeight="100vh" display="flex" alignItems="center" justifyContent="center">
-      <Box p={8} borderRadius="xl" boxShadow="xl" width={['90%', '80%', '400px']} bg="#DFEDCC">
+      <Box p={8} borderRadius="xl" boxShadow="xl" width={['90%', '80%', '400px']} bg="#1f2937">
         <VStack spacing={6}>
-          <Heading as="h1" size="xl" textAlign="center" color="green.600">
+          <Heading as="h1" size="xl" textAlign="center" color="white">
             Additional Information
           </Heading>
-          <Text textAlign="center" color="gray.600">
+          <Text textAlign="center" color="white">
             Please provide your phone number and address to complete your registration.
           </Text>
           <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <VStack spacing={4}>
               <FormControl isRequired isInvalid={phoneError}>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel color="white">Phone Number</FormLabel>
                 <Input
                   id="phone-input"
                   type="tel"
@@ -157,7 +166,7 @@ const AdditionalInfo = ({ email }) => {
                 {phoneError && <FormErrorMessage>Please enter a valid 10-digit phone number.</FormErrorMessage>}
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Address</FormLabel>
+                <FormLabel color="white">Address</FormLabel>
                 <InputGroup>
                   <Input
                     type="text"
@@ -177,16 +186,18 @@ const AdditionalInfo = ({ email }) => {
                 </InputGroup>
               </FormControl>
               <Button
-                type="submit"
-                colorScheme="green"
-                width="full"
-                mt={4}
-                isLoading={isLoading}
-                loadingText="Submitting"
-                isDisabled={phoneError || !address}
-              >
-                Submit
-              </Button>
+              type="submit"
+              colorScheme="green"
+              bg="purple.500" // Change this to your desired background color
+              _hover={{ bg: 'purple.600' }} // Optional: Add a hover effect
+              width="full"
+              mt={4}
+              isLoading={isLoading}
+              loadingText="Submitting"
+              isDisabled={phoneError || !address}
+            >
+              Submit
+            </Button>
             </VStack>
           </form>
         </VStack>

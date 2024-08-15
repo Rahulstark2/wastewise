@@ -32,7 +32,7 @@ const AvailableTrucks = () => {
               </div>
               <button
                 className={`p-2 rounded mt-2 sm:mt-0 ${
-                  selectedTruck && selectedTruck.id === truck.id ? 'bg-green-500 text-white' : 'bg-purple-500 text-white'
+                  selectedTruck && selectedTruck.id === truck.id ? 'bg-green-500 text-white' : 'bg-custom-purple text-white'
                 }`}
               >
                 {selectedTruck && selectedTruck.id === truck.id ? 'Requested' : 'Request Pickup'}

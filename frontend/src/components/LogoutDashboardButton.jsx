@@ -30,7 +30,7 @@ const LogoutDashboardButton = () => {
   };
 
   return (
-    <button className="w-full p-2 bg-gray-200 rounded mt-2 flex items-center gap-5" onClick={handleLogout}>
+    <button className="w-full p-2 bg-custom-purple text-white rounded mt-2 flex items-center gap-5" onClick={handleLogout}>
             <FiLogOut /> Logout
           </button>
   );

@@ -108,7 +108,7 @@ const LiveTrackMap = () => {
   if (!isLocationLoaded) return <Loader />;
 
   return (
-    <div className="bg-white p-4 rounded shadow-lg w-full max-w-screen-lg mx-auto">
+    <div className="bg-white p-4 rounded shadow-lg w-full max-w-screen-lg mx-auto z-30">
       <h2 className="font-bold text-lg sm:text-xl mb-4">Live Track</h2>
       <MapContainer center={truckPositions[0]} zoom={13} scrollWheelZoom={false} style={{ height: '300px', width: '100%' }}>
         <TileLayer
@@ -123,7 +123,7 @@ const LiveTrackMap = () => {
         ))}
         <LocationButton setTruckPositions={setTruckPositions} />
       </MapContainer>
-    </div>
+      </div>
   );
 };
 

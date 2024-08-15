@@ -14,7 +14,7 @@ router.post('/mail', async (req, res) => {
     const { name, topic, message } = req.body;
 
     const data = {
-        from: 'WasteWise Support <mailgun@sandbox9a2aec7d91a7477ab57b2575b5558b63.mailgun.org>',
+        from: 'WasteWise Support <mailgun@sandbox7c24d1e3e3a64b9eafb32903c8a70a09.mailgun.org>',
         to: 'wastewise2@gmail.com',
         subject: `New message from ${name}`,
         text: `Topic: ${topic}\n\nMessage: ${message}`
