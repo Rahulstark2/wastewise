@@ -126,7 +126,7 @@ const Signup = () => {
       </div>
       <div
         className={`hidden md:block md:w-2/4 bg-cover bg-center bg-no-repeat order-1 md:order-2 ${renderAdditionalInfo ? 'blur-sm' : ''}`}
-        style={{ backgroundImage: 'url("src/assets/image-5.webp")' }}
+        style={{ backgroundImage: 'url("https://i.ibb.co/FDz64tz/image-5.webp")' }}
       />
 
       {renderAdditionalInfo && (
