@@ -71,7 +71,7 @@ const Login = () => {
     <div className="flex flex-col md:flex-row h-screen">
       <div 
         className="hidden md:block md:w-2/4 bg-cover bg-center bg-no-repeat" 
-        style={{ backgroundImage: 'url("../src/assets/image-4.webp")' }}
+        style={{ backgroundImage: 'url("https://businesspost.ng/wp-content/uploads/2017/06/google-fined.png")' }}
       />
       <div className="w-full md:w-3/4 bg-[#DFEDCC] flex items-center justify-center p-8 min-h-screen">
         <div className="w-full max-w-md">
