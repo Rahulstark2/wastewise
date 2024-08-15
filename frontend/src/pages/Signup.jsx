@@ -45,7 +45,7 @@ const Signup = () => {
         const userInfo = await response.json();
         const { email, given_name, family_name } = userInfo;
 
-        const signupResponse = await fetch('http://localhost:3000/api/v1/user/check', {
+        const signupResponse = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/check', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
