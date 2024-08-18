@@ -12,6 +12,7 @@ const LogoutButton = ({ setIsLoggedIn }) => {
     localStorage.removeItem('userPhoneNumber');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userAddress');
+    localStorage.removeItem('userAddressFull')
 
     // Display a toast message
     toast({

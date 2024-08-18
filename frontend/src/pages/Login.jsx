@@ -31,6 +31,7 @@ const Login = () => {
           localStorage.setItem("token", loginData.token);
           localStorage.setItem("userPhoneNumber", loginData.user.phoneNumber);
           localStorage.setItem("userEmail", loginData.user.email);
+          localStorage.setItem("userAddressFull",loginData.user.address)
           let addressWords = loginData.user.address.split(' ');
           let shortAddress = addressWords.slice(0, 3).join(' ');
           localStorage.setItem("userAddress", shortAddress);

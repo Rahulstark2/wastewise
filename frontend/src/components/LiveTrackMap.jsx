@@ -1,9 +1,9 @@
-// src/components/LiveTrackMap.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import truckIconUrl from '../assets/truck-icon.png';
+import { AddressContext } from '../context/AddressContext';
 
 const truckIcon = new L.Icon({
   iconUrl: truckIconUrl,
@@ -67,36 +67,54 @@ const LiveTrackMap = () => {
   const [truckPositions, setTruckPositions] = useState([]);
   const [isLocationLoaded, setIsLocationLoaded] = useState(false);
 
+  const { address } = useContext(AddressContext);
+
+  useEffect(() => {
+    setIsLocationLoaded(false);
+    setTruckPositions([]);
+  }, [address]);
+
   useEffect(() => {
     if (!isLocationLoaded) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
+      if (address) {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              const { lat, lon } = data[0];
 
-        const offsets = [
-          { lat: 0.005, lng: 0.005 },
-          { lat: -0.005, lng: -0.005 },
-          { lat: 0.005, lng: -0.005 },
-        ];
+              const offsets = [
+                { lat: 0.005, lng: 0.005 },
+                { lat: -0.005, lng: -0.005 },
+                { lat: 0.005, lng: -0.005 },
+              ];
 
-        const initialPositions = offsets.map(offset => [
-          latitude + offset.lat,
-          longitude + offset.lng,
-        ]);
+              const initialPositions = offsets.map(offset => [
+                parseFloat(lat) + offset.lat,
+                parseFloat(lon) + offset.lng,
+              ]);
 
-        setTruckPositions(initialPositions);
-        setIsLocationLoaded(true);
-      }, (error) => {
-        console.error("Error getting location: ", error);
-      });
+              setTruckPositions(initialPositions);
+              setIsLocationLoaded(true);
+            } else {
+              console.error("No results found for the address");
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching address data: ", error);
+          });
+      } else {
+        console.error("No address found in AddressContext");
+      }
     }
-  }, [isLocationLoaded]);
+  }, [isLocationLoaded, address]);
 
   useEffect(() => {
     if (isLocationLoaded) {
       const interval = setInterval(() => {
         setTruckPositions(prev => prev.map((pos, index) => {
-          const speed = 0.0001; // Adjust speed as needed
-          const direction = index % 2 === 0 ? 1 : -1; // Alternate direction for different trucks
+          const speed = 0.0001;
+          const direction = index % 2 === 0 ? 1 : -1;
           return [pos[0] + speed * direction, pos[1] + speed];
         }));
       }, 7000);
@@ -123,7 +141,7 @@ const LiveTrackMap = () => {
         ))}
         <LocationButton setTruckPositions={setTruckPositions} />
       </MapContainer>
-      </div>
+    </div>
   );
 };
 
