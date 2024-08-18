@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import truckIconUrl from '../assets/truck-icon.png';
 import { AddressContext } from '../context/AddressContext';
+import { useToast } from '@chakra-ui/react';
 
 const truckIcon = new L.Icon({
   iconUrl: truckIconUrl,
@@ -66,11 +67,14 @@ const LocationButton = ({ setTruckPositions }) => {
 const LiveTrackMap = () => {
   const [truckPositions, setTruckPositions] = useState([]);
   const [isLocationLoaded, setIsLocationLoaded] = useState(false);
+  const [locationNotFound, setLocationNotFound] = useState(false);
 
   const { address } = useContext(AddressContext);
+  const toast = useToast();
 
   useEffect(() => {
     setIsLocationLoaded(false);
+    setLocationNotFound(false);
     setTruckPositions([]);
   }, [address]);
 
@@ -98,6 +102,18 @@ const LiveTrackMap = () => {
               setIsLocationLoaded(true);
             } else {
               console.error("No results found for the address");
+              setIsLocationLoaded(true);
+              setLocationNotFound(true);
+
+              // Trigger toast when location is not found
+              toast({
+                title: 'Map Not Available',
+                description: 'Map is not available for the provided address.',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+                position: 'bottom',
+              });
             }
           })
           .catch(error => {
@@ -107,7 +123,7 @@ const LiveTrackMap = () => {
         console.error("No address found in AddressContext");
       }
     }
-  }, [isLocationLoaded, address]);
+  }, [isLocationLoaded, address, toast]);
 
   useEffect(() => {
     if (isLocationLoaded) {
@@ -123,7 +139,12 @@ const LiveTrackMap = () => {
     }
   }, [isLocationLoaded]);
 
-  if (!isLocationLoaded) return <Loader />;
+  if (!isLocationLoaded) {
+    if (locationNotFound) {
+      return <div>Location not found for the provided address.</div>;
+    }
+    return <Loader />;
+  }
 
   return (
     <div className="bg-white p-4 rounded shadow-lg w-full max-w-screen-lg mx-auto z-30">
