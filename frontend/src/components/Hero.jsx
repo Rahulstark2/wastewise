@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import frame1 from "../assets/landing_photo/Frame 15.png";
-import frame2 from "../assets/landing_photo/Designer (3).jpeg"
+import frame1 from "../assets/s1.avif";
+import frame2 from "../assets/s2.jpeg"
 import frame3 from "../assets/landing_photo/Designer (4).jpeg"
 
 const Hero = () => {
