@@ -11,6 +11,17 @@ const ContactForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate inputs
+    if (!name || !topic || !message) {
+      toast({
+        title: 'Please fill out all fields.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       // Call the server-side API to send the email
       await axios.post('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/contact/mail', { name, topic, message });
@@ -34,6 +45,7 @@ const ContactForm = () => {
       });
     }
   };
+
 
   return (
     <div className="bg-custom-light-green p-4 md:p-8 rounded-lg">
