@@ -18,13 +18,13 @@ const Header = () => {
             <span className="font-normal">Wise</span>
           </div>
         </div>
-        <nav className="flex flex-col md:flex-row items-center mt-4 md:mt-0 space-y-2 md:space-y-0 md:space-x-4">
-          {/* Use buttons with onClick handlers instead of anchor tags */}
+        <nav className="flex flex-row items-center space-x-4 mt-7 md:mt-0">
           <button onClick={() => navigate("/home")} className="text-custom-black">Home</button>
           <button onClick={() => navigate("/services")} className="text-custom-black">Our Services</button>
           <button onClick={() => navigate("/blog")} className="text-custom-black">Blog</button>
           <button onClick={() => navigate("/contact")} className="text-custom-black">Contact Us</button>
         </nav>
+
       </header>
     </div>
   );

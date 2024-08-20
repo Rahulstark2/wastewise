@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 
-const LogoutButton = ({ setIsLoggedIn }) => {
+const LogoutButton = ({ setIsLoggedIn,className }) => {
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -30,7 +30,7 @@ const LogoutButton = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <button className="bg-custom-purple text-white py-3 px-4 rounded-lg flex items-center max-w-xs"
+    <button className={`bg-custom-purple text-white py-3 px-4 rounded-lg flex items-center max-w-xs justify-center ${className}`}
     onClick={handleLogout}>
       Logout
     </button>

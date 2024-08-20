@@ -36,7 +36,7 @@ const Services = () => {
     ]
 
   return (
-    <div className="p-4  ">
+    <div className="p-4 mt-[-6rem] md:mt-0">
       <div className=" flex flex-col items-center justify-center  text-[26px] font-semibold">
         Our Service
         <div className="border-2 w-[6%] border-gray-600 "></div>

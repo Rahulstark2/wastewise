@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const DashboardButton = () => {
+const DashboardButton = ({className}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -9,7 +9,7 @@ const DashboardButton = () => {
   };
 
   return (
-    <button className="bg-custom-purple text-white py-3 px-4 rounded-lg flex items-center max-w-xs"
+    <button className={`bg-custom-purple text-white py-3 px-4 rounded-lg flex items-center max-w-xs justify-center ${className}`}
     onClick={handleClick}>
       Dashboard
     </button>
