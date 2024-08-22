@@ -10,7 +10,7 @@ const Login = () => {
   const toast = useToast();
   const [renderAdditionalInfo, setRenderAdditionalInfo] = useState(false);
   const [email, setEmail] = useState('');
-  const [token, setToken] = useState(null); // Add this line
+  const [token, setToken] = useState(null);
 
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
@@ -32,7 +32,7 @@ const Login = () => {
         });
         const loginData = await loginResponse.json();
         if (loginResponse.ok) {
-          setToken(loginData.token); // Store the token in state
+          setToken(loginData.token);
           localStorage.setItem('token', loginData.token);
           localStorage.setItem('userPhoneNumber', loginData.user.phoneNumber);
           localStorage.setItem('userEmail', loginData.user.email);
@@ -76,6 +76,43 @@ const Login = () => {
     },
   });
 
+  const loginWithDemoUser = async () => {
+    const demoUserEmail = 'johndoe@example.com'; // Replace with the demo user's email
+    try {
+      const loginResponse = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: demoUserEmail }),
+      });
+      const loginData = await loginResponse.json();
+      if (loginResponse.ok) {
+        setToken(loginData.token);
+        localStorage.setItem('token', loginData.token);
+        localStorage.setItem('userPhoneNumber', loginData.user.phoneNumber);
+        localStorage.setItem('userEmail', loginData.user.email);
+        localStorage.setItem('userAddressFull', loginData.user.address);
+        let addressWords = loginData.user.address.split(' ');
+        let shortAddress = addressWords.slice(0, 3).join(' ');
+        localStorage.setItem('userAddress', shortAddress);
+
+        toast({
+          title: 'Login Successful',
+          description: 'You have been logged in successfully.',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Error logging in as demo user:', error);
+    }
+  };
+
   useEffect(() => {
     if (renderAdditionalInfo) {
       toast({
@@ -93,16 +130,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen relative">
       <div
         className={`hidden md:block md:w-2/4 bg-cover bg-center bg-no-repeat ${renderAdditionalInfo ? 'blur-sm' : ''}`}
         style={{ backgroundImage: 'url("https://i.ibb.co/Myv97n1/image-4.webp")' }}
       />
-      <div className={`w-full md:w-3/4 bg-[#DFEDCC] flex items-center justify-center p-8 min-h-screen ${renderAdditionalInfo ? 'blur-sm' : ''}`}>
+      <div className={`w-full md:w-3/4 bg-[#DFEDCC] flex flex-col items-center justify-center p-8 min-h-screen relative`}>
         <div className="w-full max-w-md">
           <h1 className="text-3xl md:text-5xl font-bold text-black mb-2">Welcome Back! 👋</h1>
           <p className="text-black mb-8 mt-4 md:mt-8">Continue with Google to Proceed</p>
-
+  
           <button
             onClick={() => login()}
             className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md mb-4 flex items-center justify-center space-x-2"
@@ -110,7 +147,7 @@ const Login = () => {
             <FcGoogle className="text-2xl" />
             <span>Continue with Google</span>
           </button>
-
+  
           <p className="text-black mt-4 md:mt-8 text-center">
             Don't have an account?{' '}
             <span className="text-black hover:underline cursor-pointer hover:text-gray-700" onClick={handleSignup}>
@@ -118,14 +155,26 @@ const Login = () => {
             </span>
           </p>
         </div>
+  
+        {/* Move Demo User Button to the Bottom */}
+        <div className="absolute inset-x-0 bottom-4 p-4 w-full max-w-md mx-auto">
+          <button
+            onClick={() => loginWithDemoUser()}
+            className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md flex items-center justify-center"
+          >
+            <span>Login as Demo User</span>
+          </button>
+        </div>
       </div>
+  
       {renderAdditionalInfo && (
         <div className="fixed inset-0 flex items-center justify-center z-10 animate-fade-in">
-          <AdditionalInfo email={email} token={token} type={"login"} /> {/* Use the token state variable here */}
+          <AdditionalInfo email={email} token={token} type={"login"} />
         </div>
       )}
     </div>
   );
+  
 };
 
 export default Login;
