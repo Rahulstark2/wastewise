@@ -24,6 +24,7 @@ const authMiddleware = (req, res, next) => {
             return res.status(403).json({});
         }
     } catch (err) {
+        console.log(err)
         return res.status(403).json({});
     }
 };

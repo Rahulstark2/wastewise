@@ -134,18 +134,27 @@ router.post('/login', async (req, res) => {
     });
   }
 
+  const userDetails = await AdditionalDetailsUser.findOne({ email: user.email });
+
+
   const secret = process.env.JWT_SECRET;
   const token = jwt.sign({ userId: user._id }, secret);
 
-  const userDetails = await AdditionalDetailsUser.findOne({ email: user.email });
+  if (!userDetails) {
+    return res.status(401).json({
+      message: 'Additional details not found for this user',
+      token: token,
+      email:user.email
+    });
+  }
 
   res.json({
     message: 'Login successful',
     token: token,
     user: {
       email: user.email,
-      phoneNumber: userDetails ? userDetails.phoneNumber : null,
-      address: userDetails ? userDetails.address : null
+      phoneNumber: userDetails.phoneNumber,
+      address: userDetails.address,
     },
   });
 });

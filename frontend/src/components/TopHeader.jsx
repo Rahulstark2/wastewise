@@ -18,6 +18,7 @@ const TopHeader = () => {
     const checkLoginStatus = async () => {
       try {
         const token = localStorage.getItem('token');
+       
         if (token) {
           const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/me', {
             headers: {

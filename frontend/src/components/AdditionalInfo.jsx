@@ -17,13 +17,14 @@ import {
 } from '@chakra-ui/react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
-const AdditionalInfo = ({ email,firstName,lastName }) => {
+const AdditionalInfo = ({ email,token,type }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [phoneError, setPhoneError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(type)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +32,8 @@ const AdditionalInfo = ({ email,firstName,lastName }) => {
       setIsLoading(true);
 
       try {
-        const a = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, firstName,lastName }),
-        });
+        
+
 
         const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/additional-details', {
           method: 'POST',
@@ -49,13 +45,30 @@ const AdditionalInfo = ({ email,firstName,lastName }) => {
   
         if (response.ok) {
           // Additional details saved successfully
+          if(type==="login") {
+          toast({
+            title: 'Login successful',
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+          });
+          localStorage.setItem('token',token)
+          localStorage.setItem('userEmail',email)
+          localStorage.setItem('userPhoneNumber',phoneNumber)
+          let addressWords = address.split(' ');
+          let shortAddress = addressWords.slice(0, 3).join(' ');
+          localStorage.setItem('userAddress', shortAddress);
+        }
+        else {
           toast({
             title: 'Registration Complete',
             description: 'Please login to continue.',
             status: 'success',
             duration: 2000,
             isClosable: true,
-          });
+          })
+
+        }
   
           // Delay the redirection for 2 seconds
           setTimeout(() => {

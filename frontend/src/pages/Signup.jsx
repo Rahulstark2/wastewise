@@ -44,24 +44,25 @@ const Signup = () => {
 
         const userInfo = await response.json();
         const { email, given_name, family_name } = userInfo;
+        const firstName=given_name;
+        const lastName=family_name;
 
-        const signupResponse = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/check', {
+        const signupResponse = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Content-Length': JSON.stringify({
-              email,
-            }).length.toString()
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, firstName, lastName }),
         });
+
+
 
         const signupData = await signupResponse.json();
         console.log(signupData)
         if (signupResponse.ok) {
           toast({
-            title: 'Sign-up Successful',
-            description: 'Your sign-up was successful!',
+            title: 'Provide Additional Details',
+            description: "Please provide additional details to complete sign up process",
             status: 'success',
             duration: 2000,
             isClosable: true,
@@ -131,7 +132,7 @@ const Signup = () => {
 
       {renderAdditionalInfo && (
         <div className={`fixed inset-0 flex items-center justify-center z-10 animate-fade-in`}>
-          <AdditionalInfo email={email} firstName={firstName} lastName={lastName} />
+          <AdditionalInfo email={email} type={"user"} />
         </div>
       )}
     </div>
