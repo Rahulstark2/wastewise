@@ -23,7 +23,7 @@ const Login = () => {
         });
         const userInfo = await response.json();
         const { email } = userInfo;
-        const loginResponse = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/login', {
+        const loginResponse = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

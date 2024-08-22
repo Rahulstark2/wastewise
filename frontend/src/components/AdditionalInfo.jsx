@@ -35,7 +35,7 @@ const AdditionalInfo = ({ email,token,type }) => {
         
 
 
-        const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/additional-details', {
+        const response = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/additional-details', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const TopHeader = () => {
         const token = localStorage.getItem('token');
        
         if (token) {
-          const response = await fetch('https://backend-qtcmsat0c-rahulstark2s-projects.vercel.app/api/v1/user/me', {
+          const response = await fetch('https://backend-zeta-ashen.vercel.app/api/v1/user/me', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
