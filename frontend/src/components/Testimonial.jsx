@@ -23,25 +23,25 @@ const Testimonial = () => {
     {
       src: img3,
       testimo:
-        "Their battery waste EPR service is top-notch. They ensure that the batteries are recycled responsibly, and I appreciate their commitment to sustainability.",
+        "Their battery waste EPR service is top-notch. They ensure that the batteries are recycled responsibly.",
       name: "Rajesh Kumar",
     },
     {
       src: img4,
       testimo:
-        "Their plastic waste EPR service has significantly reduced our carbon footprint. Their team is professional and dedicated to providing excellent service.",
+        "Their plastic waste EPR service has significantly reduced our carbon footprint. ",
       name: "Meena Singh",
     },
     {
       src: img5,
       testimo:
-        "I've been a customer of their recycler registration service for years. They're always up-to-date with the latest regulations and provide excellent support.",
+        "I've been a customer of their recycler registration service for years. They're always up-to-date with the latest regulations.",
       name: "Priya Patel",
     },
     {
       src: img6,
       testimo:
-        "Their tyre waste EPR service is outstanding. They've helped us dispose of our old tyres in an environmentally friendly manner, and we're very satisfied with their service.",
+        "Their tyre waste EPR service is outstanding. They've helped us dispose of our old tyres in an environmentally friendly manner.",
       name: "Anjali Verma",
     },
   ];
