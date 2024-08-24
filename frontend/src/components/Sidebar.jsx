@@ -36,20 +36,20 @@ const Sidebar = () => {
 
   return (
     <>
-    {/* Sidebar Toggle Button */}
-    <button
-      className="lg:hidden fixed top-2 left-4 z-50 p-2 bg-custom-deep-purple text-white rounded"
-      onClick={toggleSidebar}
-    >
-      {isSidebarOpen ? <AiOutlineClose /> : <HiMenu />}
-    </button>
+      {/* Sidebar Toggle Button */}
+      <button
+        className="lg:hidden fixed top-2 left-4 z-50 p-2 bg-custom-deep-purple text-white rounded"
+        onClick={toggleSidebar}
+      >
+        {isSidebarOpen ? <AiOutlineClose /> : <HiMenu />}
+      </button>
 
-    {/* Sidebar */}
-    <div
-      className={`sidebar bg-[#DFEDCC] w-64 h-screen p-4 flex flex-col fixed top-0 left-0 transition-transform duration-300 ease-in-out z-40 ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0`}
-    >
+      {/* Sidebar */}
+      <div
+        className={`sidebar bg-[#DFEDCC] w-64 h-screen p-4 flex flex-col fixed top-0 left-0 transition-transform duration-300 ease-in-out z-40 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}
+      >
         <div className="flex items-center space-x-2 mt-10">
           <img src={logo} alt="Logo" className="h-10" />
           <div className="text-black text-2xl">
@@ -57,33 +57,35 @@ const Sidebar = () => {
             <span className="font-normal">Wise</span>
           </div>
         </div>
-        <ul className='mt-8'>
-          <li className="mb-4">
-            <Link to="/" className="p-2 bg-custom-purple text-white rounded flex items-center gap-5">
-              <BiHome /> Home
-            </Link>
-          </li>
-          <li className="mb-4">
-            <Link
-              to="/dashboard"
-              className={`p-2 text-white rounded flex items-center gap-5 ${
-                location.pathname === '/dashboard' ? 'bg-green-500' : 'bg-custom-purple'
-              }`}
-            >
-              <BiSolidDashboard /> Dashboard
-            </Link>
-          </li>
-          <li className="mb-4">
-            <Link
-              to="/scheduling"
-              className={`p-2 text-white rounded flex items-center gap-5 ${
-                location.pathname === '/scheduling' ? 'bg-green-500' : 'bg-custom-purple'
-              }`}
-            >
-              <AiTwotoneSchedule /> Scheduling
-            </Link>
-          </li>
-        </ul>
+        <div className="overflow-y-auto h-[calc(100vh-15rem)]"> {/* Add this div */}
+          <ul className='mt-8'>
+            <li className="mb-4">
+              <Link to="/" className="p-2 bg-custom-purple text-white rounded flex items-center gap-5">
+                <BiHome /> Home
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link
+                to="/dashboard"
+                className={`p-2 text-white rounded flex items-center gap-5 ${
+                  location.pathname === '/dashboard' ? 'bg-green-500' : 'bg-custom-purple'
+                }`}
+              >
+                <BiSolidDashboard /> Dashboard
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link
+                to="/scheduling"
+                className={`p-2 text-white rounded flex items-center gap-5 ${
+                  location.pathname === '/scheduling' ? 'bg-green-500' : 'bg-custom-purple'
+                }`}
+              >
+                <AiTwotoneSchedule /> Scheduling
+              </Link>
+            </li>
+          </ul>
+        </div> {/* Close the div */}
         <div className="mt-auto">
           <LogoutDashboardButton/>
         </div>
