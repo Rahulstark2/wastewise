@@ -135,7 +135,7 @@ const Login = () => {
         className={`hidden md:block md:w-2/4 bg-cover bg-center bg-no-repeat ${renderAdditionalInfo ? 'blur-sm' : ''}`}
         style={{ backgroundImage: 'url("https://i.ibb.co/Myv97n1/image-4.webp")' }}
       />
-      <div className={`w-full md:w-3/4 bg-[#DFEDCC] flex flex-col items-center justify-center p-8 min-h-screen relative`}>
+      <div className={`w-full md:w-3/4 bg-[#DFEDCC] flex flex-col items-center justify-center p-8 min-h-screen relative ${renderAdditionalInfo ? 'blur-sm' : ''}`}>
         <div className="w-full max-w-md">
           <h1 className="text-3xl md:text-5xl font-bold text-black mb-2">Welcome Back! 👋</h1>
           <p className="text-black mb-8 mt-4 md:mt-8">Continue with Google to Proceed</p>
