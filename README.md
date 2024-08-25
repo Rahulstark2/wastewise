@@ -17,4 +17,3 @@ This project is a web application developed to manage waste pickup services with
 - **Backend**: Express.js, Node.js
 - **Database**: MongoDB (MongoDB Atlas)
 - **Maps**: Map integration for real-time tracking
-- **Other**: Axios for API calls
