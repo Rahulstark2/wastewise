@@ -10,14 +10,14 @@ import Avatar3 from '../assets/avatar3.webp';
 import Avatar4 from '../assets/avatar4.webp';
 
 const BlogCard = ({ image, title, author, date, shares, excerpt }) => (
-  <div className="bg-custom-light-green rounded-lg overflow-hidden shadow-md w-full md:w-[48%] lg:w-[575px] h-auto relative custom-blog-card">
-    <img src={image} alt={title} className="w-full h-[240px] md:h-[300px] lg:h-[420px] object-cover custom-blog-image" />
+  <div className="bg-custom-light-green rounded-lg overflow-hidden shadow-md w-full h-auto relative custom-blog-card">
+    <img src={image} alt={title} className="w-full h-[240px] object-cover custom-blog-image md:h-[300px]" />
     <div className="p-4">
-      <h3 className="font-normal text-xl md:text-2xl lg:text-4xl mb-2">{title}</h3>
+      <h3 className="font-normal text-lg md:text-xl lg:text-2xl mb-2">{title}</h3>
       <div className="flex items-center mb-2 my-5">
         <img src={author.avatar} alt={author.name} className="w-6 h-6 rounded-full mr-2" />
-        <span className="text-sm text-custom-blackyy mr-4 md:mr-16">{author.name}</span>
-        <span className="text-sm text-custom-blackyy mr-4 md:mr-8">{date}</span>
+        <span className="text-sm text-custom-blackyy mr-4">{author.name}</span>
+        <span className="text-sm text-custom-blackyy mr-4">{date}</span>
         <span className="text-sm text-custom-blackyy">{shares} shares</span>
       </div>
       <p className="text-sm text-custom-blackyy mb-4">{excerpt}</p>
@@ -64,7 +64,7 @@ const BlogCards = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-[30px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-10">
         {blogs.map((blog, index) => (
           <BlogCard key={index} {...blog} />
         ))}

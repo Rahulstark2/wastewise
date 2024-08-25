@@ -53,7 +53,7 @@ const Header = () => {
               isActive("/contact") ? 'border-custom-olive-green' : 'border-transparent'
             } hover:border-custom-olive-green transition duration-300`}
           >
-            Contact Us
+            Contact Us 
           </button>
         </nav>
       </header>
